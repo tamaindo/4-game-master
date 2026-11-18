@@ -77,7 +77,7 @@ h1{font-size:clamp(28px,6vw,44px);letter-spacing:-.02em}
 .hm{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:34px;font-weight:900;color:#fff;opacity:0;pointer-events:none;text-shadow:0 0 6px #000}
 .ov2{position:absolute;inset:0;pointer-events:none;opacity:0}
 .vg{box-shadow:inset 0 0 120px 40px #f00}.fl{background:#fff}
-.scp{background:radial-gradient(circle,transparent 0,transparent 30%,#000 31%)}
+.scp{background:radial-gradient(circle closest-side,transparent 0,transparent 82%,#000 83%)}
 .hp{position:absolute;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:18px;align-items:baseline;font-size:15px;text-shadow:0 2px 6px #000;pointer-events:none}
 .hp b{font-size:34px}
 .am{position:absolute;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));text-align:right;text-shadow:0 2px 6px #000;pointer-events:none}
@@ -104,6 +104,15 @@ h1{font-size:clamp(28px,6vw,44px);letter-spacing:-.02em}
 .tbuy{left:calc(10px + env(safe-area-inset-left,0px));top:calc(140px + env(safe-area-inset-top,0px));width:48px;height:48px}
 .tq1{left:calc(14px + env(safe-area-inset-left,0px));bottom:calc(190px + env(safe-area-inset-bottom,0px));width:50px;height:50px}
 .tq2{left:calc(76px + env(safe-area-inset-left,0px));bottom:calc(190px + env(safe-area-inset-bottom,0px));width:50px;height:50px}
+#gr canvas.rd{width:128px;height:80px}
+#gr canvas.mp2{width:120px;height:120px}
+#gr canvas.rd.off,#gr canvas.mp2.off{display:none}
+@media (hover:hover) and (pointer:fine){.joy,.act,.str,.pw.sm{display:none}}
+@media (pointer:coarse){
+.act{width:128px}.act button{width:58px;height:58px;background:#ffffff1c;border-color:#ffffff30}
+.joy{width:110px;height:110px;background:#ffffff12;border-color:#ffffff30}.joy i{width:48px;height:48px;margin:-24px}
+.str button{width:70px;height:70px;background:#ffffff1c;border-color:#ffffff30}
+.tb{background:#ffffff1c;border-color:#ffffff30}}
 </style>
 </head>
 <body>
@@ -444,7 +453,7 @@ function startSoccer(root){
   <div id="mn" class="ov"><div class="pn"><h2>⚽ Bola 11 vs 11</h2><p id="rs"></p>
   <p>Level bot</p><div class="seg" data-k="lvl"><button data-v="1">Mudah</button><button class="on" data-v="2">Sedang</button><button data-v="3">Sulit</button></div>
   <p>Durasi (2 babak)</p><div class="seg" data-k="dur"><button data-v="120">2 menit</button><button class="on" data-v="240">4 menit</button><button data-v="360">6 menit</button></div>
-  <p style="opacity:.6;line-height:1.5">Kamu tim biru (menyerang ke kanan). Keyboard: WASD gerak · J operan (tahan = terobosan) atau ganti pemain · K tendang (tahan = kuat) atau rebut · L umpan lambung/silang atau slide · Shift lari. Di HP, putar ke landscape.</p>
+  <p style="opacity:.6;line-height:1.5">Kamu tim biru (menyerang ke kanan). Keyboard: WASD gerak · J operan (tahan = terobosan) atau ganti pemain · K tendang (tahan = kuat) atau rebut · L umpan lambung/silang atau slide · Shift lari · M sembunyikan radar. Di HP, putar ke landscape.</p>
   <button id="go" class="big">Kick off</button></div></div>`;
   const $=id=>root.querySelector('#'+id),stEl=$('st'),bn=$('bn'),mn=$('mn');
   root.querySelectorAll('.seg').forEach(sg=>sg.addEventListener('click',e=>{
@@ -862,7 +871,7 @@ function startSoccer(root){
   hold($('bA'),downA,relA);hold($('bB'),downB,relB);hold($('bC'),downC,()=>{});hold($('bD'),()=>{inp.bsp=true},()=>{inp.bsp=false});
   addEventListener('keydown',e=>{
     const k=e.key.length===1?e.key.toLowerCase():e.key;if(K[k])return;K[k]=1;
-    if(k==='j')downA();if(k==='k')downB();if(k==='l')downC();if(k==='q')switchP();
+    if(k==='j')downA();if(k==='k')downB();if(k==='l')downC();if(k==='q')switchP();if(k==='m')rd.classList.toggle('off');
     if(k.startsWith('Arrow')||k===' ')e.preventDefault();
   },{signal:sig});
   addEventListener('keyup',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;K[k]=0;if(k==='j')relA();if(k==='k')relB()},{signal:sig});
@@ -932,7 +941,7 @@ function startF1(root){
   <p>Level lawan</p><div class="seg" data-k="lvl"><button data-v="1">Mudah</button><button class="on" data-v="2">Sedang</button><button data-v="3">Sulit</button></div>
   <p>Jumlah lap</p><div class="seg" data-k="laps"><button data-v="2">2</button><button class="on" data-v="3">3</button><button data-v="5">5</button></div>
   <p>Gas</p><div class="seg" data-k="auto"><button class="on" data-v="1">Otomatis</button><button data-v="0">Manual</button></div>
-  <p style="opacity:.6;line-height:1.5">Kamu mobil merah, start di grid bersama 5 rival. Keyboard: ←/→ atau A/D belok · ↑/W gas · ↓/S rem · Spasi/Shift boost. Di HP pakai tombol layar (putar ke landscape).</p>
+  <p style="opacity:.6;line-height:1.5">Kamu mobil merah, start di grid bersama 5 rival. Keyboard: ←/→ atau A/D belok · ↑/W gas · ↓/S rem · Spasi/Shift boost · M sembunyikan peta mini. Di HP pakai tombol layar (putar ke landscape).</p>
   <button id="go" class="big">Mulai balapan</button></div></div>`;
   const $=id=>root.querySelector('#'+id),stEl=$('st'),bn=$('bn'),mn=$('mn');
   root.querySelectorAll('.seg').forEach(sg=>sg.addEventListener('click',e=>{
@@ -1160,7 +1169,7 @@ function startF1(root){
     for(const ev of['pointerup','pointercancel'])el.addEventListener(ev,()=>{inp[k]=false},{signal:sig});
   };
   hold('bL','L');hold('bR','R');hold('bG','G');hold('bK','K');hold('bS','S');
-  addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;K[k]=1;if(k.startsWith('Arrow')||k===' ')e.preventDefault()},{signal:sig});
+  addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;K[k]=1;if(k==='m')mm.classList.toggle('off');if(k.startsWith('Arrow')||k===' ')e.preventDefault()},{signal:sig});
   addEventListener('keyup',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;K[k]=0},{signal:sig});
 
   /* ---------- render ---------- */
@@ -1226,7 +1235,7 @@ function startFPS(root){
   <div id="mn" class="ov"><div class="pn"><h2>🎯 FPS Taktis</h2><p id="rs"></p>
   <p>Level bot</p><div class="seg" data-k="lvl"><button data-v="1">Mudah</button><button class="on" data-v="2">Sedang</button><button data-v="3">Sulit</button></div>
   <p>Sisi awal</p><div class="seg" data-k="side"><button data-v="0">Penyerang</button><button data-v="1">Bertahan</button><button class="on" data-v="2">Acak</button></div>
-  <p style="opacity:.65;line-height:1.55;font-size:12.5px">5 vs 5, ronde ala Valorant: penyerang memasang <b>spike</b> di site A/B, bertahan mencegah atau men-defuse. Menang 4 ronde, sisi bertukar setelah ronde 3.<br>PC: WASD gerak · Shift jalan senyap · C jongkok · Spasi lompat · klik kiri tembak · klik kanan ADS · R reload · 1/2/3 senjata · tahan E plant/defuse · Q smoke · F flash · B beli · Tab skor.<br>HP: joystick kiri, geser layar kanan untuk membidik.</p>
+  <p style="opacity:.65;line-height:1.55;font-size:12.5px">5 vs 5, ronde ala Valorant: penyerang memasang <b>spike</b> di site A/B, bertahan mencegah atau men-defuse. Menang 4 ronde, sisi bertukar setelah ronde 3.<br>PC: WASD gerak · Shift jalan senyap · C jongkok · Spasi lompat · klik kiri tembak · klik kanan ADS · R reload · 1/2/3 senjata · tahan E plant/defuse · Q smoke · F flash · B beli · Tab skor · M sembunyikan peta mini.<br>HP: joystick kiri, geser layar kanan untuk membidik.</p>
   <button id="go" class="big">Mulai pertandingan</button></div></div>`;
   const $=id=>root.querySelector('#'+id),el={};
   ['mp','s0','s1','tm','al','kf','cx','hm','vg','fl','scp','ar','hv','cr2','wn','ammo','res','aQ','aF','bn','us','hint','buy','sb','mn','go','rs'].forEach(k=>el[k]=$(k));
@@ -1337,7 +1346,7 @@ function startFPS(root){
     for(const o of TR)if(o.t>0){o.t-=dt;if(o.t<=0)o.l.visible=false}
     for(const o of IM)if(o.t>0){o.t-=dt;o.m.scale.setScalar(Math.max(.01,o.t*4));if(o.t<=0)o.m.visible=false}
   }
-  const smG=new THREE.SphereGeometry(1,16,12),smM=new THREE.MeshBasicMaterial({color:0xc9ced6,transparent:true,opacity:.97}),grG=new THREE.SphereGeometry(.12,8,6);
+  const smG=new THREE.SphereGeometry(1,16,12),smM=new THREE.MeshBasicMaterial({color:0xc9ced6,transparent:true,opacity:.97,side:THREE.DoubleSide}),grG=new THREE.SphereGeometry(.12,8,6);
   const spikeMesh=new THREE.Group();
   {const b=new THREE.Mesh(new THREE.BoxGeometry(.4,.22,.55),M(0x1b1b22));b.position.y=.11;spikeMesh.add(b);const l=new THREE.Mesh(new THREE.SphereGeometry(.07,8,6),new THREE.MeshBasicMaterial({color:0xff2a2a}));l.position.set(0,.26,0);spikeMesh.add(l);spikeMesh.visible=false;sc.add(spikeMesh)}
 
@@ -1684,7 +1693,7 @@ function startFPS(root){
         if(!vis(u.x,eye,u.z,e.x,eyeY(e)-.2,e.z))continue;
         e.vT=.5;if(d<bd){bd=d;best=e}
       }
-      if(best){if(u.tgt!==best){u.tgt=best;u.rT=LV.react*rnd(.7,1.3);u.aimHead=Math.random()<LV.hs;u.stance=Math.random()<.55?0:1;u.burst=0}u.seen=0;u.lsx=best.x;u.lsz=best.z}
+      if(best){if(u.tgt!==best){u.tgt=best;u.rT=LV.react*rnd(.7,1.3)*(u.team===atkT?1:.88);u.aimHead=Math.random()<LV.hs;u.stance=Math.random()<.55?0:1;u.burst=0}u.seen=0;u.lsx=best.x;u.lsz=best.z}
     }
     if(u.fb>0)u.tgt=null;
     if(u.tgt&&(!u.tgt.alive||u.seen>.5))u.tgt=null;
@@ -1750,7 +1759,7 @@ function startFPS(root){
     el.sb.style.display='flex';
   }
   addEventListener('keydown',e=>{
-    const k=e.key.length===1?e.key.toLowerCase():e.key;if(K[k]&&k!=='Tab')return;K[k]=1;
+    const k=e.key.length===1?e.key.toLowerCase():e.key;if(K[k]&&k!=='Tab')return;K[k]=1;if(k==='m')el.mp.classList.toggle('off');
     if(st==='menu'||st==='over')return;
     if(k==='1')switchW(0);if(k==='2')switchW(1);if(k==='3')switchW(2);
     if(k==='r')reload(P);if(k==='q')throwG(P,'smoke');if(k==='f')throwG(P,'flash');
